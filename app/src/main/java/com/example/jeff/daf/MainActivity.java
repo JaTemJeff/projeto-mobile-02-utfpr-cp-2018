@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -17,6 +19,10 @@ public class MainActivity extends Activity {
     private Button botaoSobre;
     private Button botaoPreferencias;
     private AlertDialog.Builder confirmaPararDialog;
+    private SeekBar seekbarFrequencia;
+    private SeekBar seekbarDelay;
+    private TextView exibeDelay;
+    private TextView exibeFrequencia;
     private Switch switchativarbluetooth;
 
     @Override
@@ -40,6 +46,46 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v){
                 startActivity(new Intent(MainActivity.this, PreferenciasActivity.class));
+            }
+        });
+
+        //Texto de Exibição dos Seekbar's
+        seekbarFrequencia = findViewById(R.id.seekbar_frequencia_id);
+        seekbarDelay = findViewById(R.id.seekbar_delay_id);
+        exibeDelay = findViewById(R.id.textview_exibe_delay_id);
+        exibeFrequencia = findViewById(R.id.textview_exibe_frequencia_id);
+
+        seekbarDelay.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                exibeDelay.setText("Delay:"+ i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        seekbarFrequencia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                exibeFrequencia.setText("Frequencia:"+ i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 

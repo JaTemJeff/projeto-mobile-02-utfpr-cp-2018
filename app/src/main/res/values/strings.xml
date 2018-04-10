@@ -6,11 +6,9 @@
     <string name="delay">Delay</string>
     <string name="desativar_notificacoes">Desativar Notificações</string>
     <string name="botaosobre" />
-    <string name="sobre">Sobre</string>
     <string name="botao_preferencias" />
     <string name="preferencias">Preferências</string>
     <string name="desenvolvedores">Desenvolvedores</string>
-    <string name="descricao_jeff">Jefferson de França Filho</string>
     <string name="jefferson">Jefferson de França Filho - Bacharelado em Engenharia de Software - Universidade Tecnológica Federal do Paraná - UTFPR - Gerente do projeto (aluno bolsista).</string>
     <string name="fabricio">Fabrício Martins Lopes - Doutor em Bioinformática (2011) pela Universidade de São Paulo - Professor na Universidade Tecnológica Federal do Paraná - UTFPR - Orientador do projeto.</string>
     <string name="joao">João Gabriel Salgado - Bacharelado em Engenharia de Software - Universidade Tecnológica Federal do Paraná - UTFPR. Desenvolvedor (aluno voluntário).</string>
