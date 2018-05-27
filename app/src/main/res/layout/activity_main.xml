@@ -10,7 +10,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/background_light"
+        android:background="@android:color/transparent"
         tools:context="com.example.jeff.daf.MainActivity">
 
         <Button
@@ -22,7 +22,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@android:drawable/alert_dark_frame"
-            android:backgroundTint="@android:color/black"
+            android:backgroundTint="@android:color/holo_green_dark"
             android:lineSpacingExtra="14sp"
             android:text="@string/iniciar"
             android:textColor="@android:color/background_light"
@@ -42,6 +42,7 @@
             android:text="@string/ativar_headset_bluetooth"
             android:textAlignment="viewStart"
             android:textSize="14sp"
+            android:thumbTint="@android:color/holo_green_dark"
             app:layout_constraintBottom_toTopOf="@+id/seekbar_frequencia_id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,6 +56,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="50dp"
+            android:backgroundTint="@android:color/holo_green_dark"
             android:max="4"
             android:thumb="@android:drawable/checkbox_off_background"
             app:layout_constraintBottom_toTopOf="@+id/seekbar_delay_id"
@@ -71,6 +73,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="28dp"
+            android:backgroundTint="@android:color/holo_green_dark"
             android:max="10"
             android:thumb="@android:drawable/checkbox_off_background"
             app:layout_constraintBottom_toTopOf="@+id/spinner_id"
@@ -111,12 +114,11 @@
             android:layout_width="wrap_content"
             android:layout_height="33dp"
             android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:buttonTint="@android:color/holo_green_dark"
             android:text="@string/desativar_notificacoes"
             app:layout_constraintBottom_toTopOf="@+id/botao_parar_id"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_id" />
 
@@ -147,7 +149,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@android:drawable/alert_dark_frame"
-            android:backgroundTint="@android:color/black"
+            android:backgroundTint="@android:color/holo_red_dark"
             android:text="Button"
             android:textColor="@android:color/background_light"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -163,6 +165,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/darker_gray"
             app:layout_constraintBottom_toTopOf="@+id/checkbox_notificacao_id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekbar_delay_id" />
