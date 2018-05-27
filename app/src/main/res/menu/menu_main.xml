@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/opcao_menu_preferencias_id"
+        android:title="@string/opcao_menu_preferencias" />
+    <item
+        android:id="@+id/opcao_menu_sobre_id"
+        android:title="@string/opcao_menu_sobre" />
+</menu>

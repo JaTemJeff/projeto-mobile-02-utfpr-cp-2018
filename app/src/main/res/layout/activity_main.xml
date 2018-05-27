@@ -1,154 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/background_light"
-    tools:context="com.example.jeff.daf.MainActivity">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/botao_iniciar_id"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:drawable/alert_dark_frame"
-        android:backgroundTint="@android:color/black"
-        android:lineSpacingExtra="14sp"
-        android:text="@string/iniciar"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar_delay_id"
-        app:layout_constraintVertical_bias="1.0" />
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"
+        tools:context="com.example.jeff.daf.MainActivity">
 
-    <Switch
-        android:id="@+id/switch_headset-bluetooh_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/ativar_headset_bluetooth"
-        android:textAlignment="viewStart"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/botao_sobre_id"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/botao_iniciar_id"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:drawable/alert_dark_frame"
+            android:backgroundTint="@android:color/black"
+            android:lineSpacingExtra="14sp"
+            android:text="@string/iniciar"
+            android:textColor="@android:color/background_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/botao_parar_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkbox_notificacao_id"
+            app:layout_constraintVertical_bias="1.0" />
 
-    <SeekBar
-        android:id="@+id/seekbar_frequencia_id"
-        style="@android:style/Widget.Material.SeekBar.Discrete"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
-        android:max="10"
-        android:thumb="@android:drawable/checkbox_off_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textview_frequencia_id"
-        app:layout_constraintTop_toBottomOf="@+id/switch_headset-bluetooh_id" />
+        <Switch
+            android:id="@+id/switch_headset-bluetooh_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/ativar_headset_bluetooth"
+            android:textAlignment="viewStart"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/seekbar_frequencia_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <SeekBar
-        android:id="@+id/seekbar_delay_id"
-        style="@android:style/Widget.Material.SeekBar.Discrete"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:max="10"
-        android:thumb="@android:drawable/checkbox_off_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textview_delay_id"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar_frequencia_id" />
+        <SeekBar
+            android:id="@+id/seekbar_frequencia_id"
+            style="@android:style/Widget.Material.SeekBar.Discrete"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="50dp"
+            android:max="4"
+            android:thumb="@android:drawable/checkbox_off_background"
+            app:layout_constraintBottom_toTopOf="@+id/seekbar_delay_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textview_frequencia_id"
+            app:layout_constraintTop_toBottomOf="@+id/switch_headset-bluetooh_id" />
 
-    <TextView
-        android:id="@+id/textview_frequencia_id"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
-        android:text="@string/frequencia"
-        android:textColor="@android:color/background_dark"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_headset-bluetooh_id" />
+        <SeekBar
+            android:id="@+id/seekbar_delay_id"
+            style="@android:style/Widget.Material.SeekBar.Discrete"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:max="10"
+            android:thumb="@android:drawable/checkbox_off_background"
+            app:layout_constraintBottom_toTopOf="@+id/spinner_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textview_delay_id"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_frequencia_id" />
 
-    <TextView
-        android:id="@+id/textview_delay_id"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/delay"
-        android:textColor="@android:color/background_dark"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/checkbox_notificacao_id"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_frequencia_id"
-        app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:id="@+id/textview_frequencia_id"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/frequencia"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/textview_delay_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch_headset-bluetooh_id" />
 
-    <CheckBox
-        android:id="@+id/checkbox_notificacao_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/desativar_notificacoes"
-        app:layout_constraintBottom_toTopOf="@+id/botao_iniciar_id"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar_delay_id" />
+        <TextView
+            android:id="@+id/textview_delay_id"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/delay"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/spinner_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_frequencia_id" />
 
-    <Button
-        android:id="@+id/botao_sobre_id"
-        style="@style/AlertDialog.AppCompat"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:drawable/ic_menu_help"
-        android:backgroundTint="@android:color/background_dark"
-        android:text="@string/botaosobre"
-        app:layout_constraintEnd_toStartOf="@+id/botao_preferncias_id"
-        app:layout_constraintTop_toTopOf="parent" />
+        <CheckBox
+            android:id="@+id/checkbox_notificacao_id"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/desativar_notificacoes"
+            app:layout_constraintBottom_toTopOf="@+id/botao_parar_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_id" />
 
-    <Button
-        android:id="@+id/botao_preferncias_id"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:drawable/ic_menu_manage"
-        android:backgroundTint="@android:color/background_dark"
-        android:text="@string/botao_preferencias"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textview_exibe_frequencia_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/seekbar_frequencia_id"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/textview_exibe_frequencia_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekbar_frequencia_id"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:id="@+id/textview_exibe_delay_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/seekbar_delay_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_frequencia_id" />
 
-    <TextView
-        android:id="@+id/textview_exibe_delay_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekbar_delay_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar_frequencia_id" />
+        <Button
+            android:id="@+id/botao_parar_id"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:drawable/alert_dark_frame"
+            android:backgroundTint="@android:color/black"
+            android:text="Button"
+            android:textColor="@android:color/background_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/botao_iniciar_id"
+            app:layout_constraintTop_toBottomOf="@+id/checkbox_notificacao_id"
+            tools:text="@string/botao_parar" />
 
-</android.support.constraint.ConstraintLayout>
+        <Spinner
+            android:id="@+id/spinner_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkbox_notificacao_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_delay_id" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
