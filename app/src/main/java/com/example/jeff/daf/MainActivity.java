@@ -4,7 +4,9 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.support.annotation.NonNull;
@@ -16,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -40,7 +43,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView exibeFrequencia;
     private Switch switchativarbluetooth;
     private CheckBox checkboxnotificacao;
-    Spinner selecionaModo;
+    private Spinner selecionaModo;
+
+    private static final String ARQUIVO_PREFERENCIA = "ArqPreferencia";
+
+    private int delay;
+    private int frequencia;
+    private boolean ativar_motoBluetooth;
+    private boolean ativar_notificacao;
+
 
     //Gravacao de audio
     private static final String LOG_TAG = "AudioRecordTest";
@@ -145,11 +156,36 @@ public class MainActivity extends AppCompatActivity {
         switchativarbluetooth = findViewById(R.id.switch_headset_bluetooh_id);
         checkboxnotificacao = findViewById(R.id.checkbox_notificacao_id);
 
+        //Persistencia com sharedpreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(ARQUIVO_PREFERENCIA, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("salvaFrequencia", seekbarFrequencia.getProgress());
+        editor.putInt("salvaDelay", seekbarDelay.getProgress());
+        editor.putBoolean("salvaNotificacao", checkboxnotificacao.isChecked());
+        editor.putBoolean("salvaBluetooth", switchativarbluetooth.isChecked());
+        editor.commit();
+
+        if(sharedPreferences.contains("salvaFrequencia")) {
+            seekbarFrequencia.setMax(0);
+            seekbarFrequencia.setMax(10);
+            seekbarFrequencia.setProgress(sharedPreferences.getInt("salvaFrequencia", seekbarFrequencia.getProgress()));
+        }
+        if(sharedPreferences.contains("salvaDelay")){
+            seekbarDelay.setMax(0);
+            seekbarDelay.setMax(4);
+            seekbarDelay.setProgress(sharedPreferences.getInt("salvaDelay", seekbarDelay.getProgress()));
+        }
+        if(sharedPreferences.contains("salvaNotificacao")) {
+            checkboxnotificacao.setChecked(sharedPreferences.getBoolean("salvaNotificacao", checkboxnotificacao.isChecked()));
+        }
+        if(sharedPreferences.contains("salvaBluetooth")) {
+            switchativarbluetooth.setChecked((sharedPreferences.getBoolean("salvaBluetooth", switchativarbluetooth.isChecked())));
+        }
 
         seekbarDelay.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                exibeDelay.setText("Delay:" + i);
+                exibeDelay.setText("Delay: " + i + " Ms");
             }
 
             @Override
@@ -166,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         seekbarFrequencia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                exibeFrequencia.setText("Frequencia:" + i);
+                exibeFrequencia.setText("Frequencia: " + i + " Mhz");
             }
 
             @Override
@@ -185,53 +221,81 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.itens_spiner, android.R.layout.simple_spinner_item);
         selecionaModo.setAdapter(adapter);
 
-        switch (selecionaModo.getSelectedItem().toString()) {
-            case "Modo Casa":
-                seekbarDelay.setProgress(5);
-                seekbarFrequencia.setProgress(2);
-                switchativarbluetooth.setSelected(false);
-                checkboxnotificacao.setSelected(false);
+        selecionaModo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (selecionaModo.getSelectedItem().toString()) {
+                    case "Modo Casa":
+                        seekbarFrequencia.setMax(0);
+                        seekbarFrequencia.setMax(4);
+                        seekbarFrequencia.setProgress(2);
+                        seekbarDelay.setMax(0);
+                        seekbarDelay.setMax(10);
+                        seekbarDelay.setProgress(2);
+                        switchativarbluetooth.setChecked(false);
+                        checkboxnotificacao.setChecked(false);
+                        break;
 
-            case "Modo Apresentação":
-                seekbarDelay.setProgress(5);
-                seekbarFrequencia.setProgress(2);
-                switchativarbluetooth.setSelected(true);
-                checkboxnotificacao.setSelected(true);
+
+                    case "Modo Apresentação":
+                        seekbarDelay.setMax(0);
+                        seekbarDelay.setMax(10);
+                        seekbarDelay.setProgress(5);
+                        seekbarFrequencia.setMax(0);
+                        seekbarFrequencia.setMax(4);
+                        seekbarFrequencia.setProgress(2);
+                        switchativarbluetooth.setChecked(true);
+                        checkboxnotificacao.setChecked(true);
+                        break;
+
+                    case "Nenhum Modo Selecionado":
+                        seekbarDelay.setMax(0);
+                        seekbarDelay.setMax(10);
+                        seekbarDelay.setProgress(0);
+                        seekbarFrequencia.setMax(0);
+                        seekbarFrequencia.setMax(4);
+                        seekbarFrequencia.setProgress(0);
+                        switchativarbluetooth.setChecked(false);
+                        checkboxnotificacao.setChecked(false);
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
-            case "Modo Personalizado":
-                seekbarDelay.setProgress(0);
-                seekbarFrequencia.setProgress(0);
-                switchativarbluetooth.setSelected(false);
-                checkboxnotificacao.setSelected(false);
-        }
 
         botaoIniciar = findViewById(R.id.botao_iniciar_id);
         botaoIniciar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                /*
-                boolean mStartRecording = true;
-                boolean mStartPlaying = true;
+                //boolean mStartRecording = true;
+                //boolean mStartPlaying = true;
 
-                onPlay(mStartPlaying);
-                onRecord(mStartRecording);
-                */
+                //onRecord(mStartRecording);
+                //onPlay(mStartPlaying);
             }
-
         });
 
+
+
         botaoParar = findViewById(R.id.botao_parar_id);
-        botaoIniciar.setOnClickListener(new View.OnClickListener(){
+        botaoParar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //stopPlaying();
                 //stopRecording();
+               // stopPlaying();
             }
 
         });
 
     }
+
 
     //Infla Menu
     @Override

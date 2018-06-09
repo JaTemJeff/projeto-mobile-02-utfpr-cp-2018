@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">DAF</string>
     <string name="iniciar">Iniciar</string>
+    <string name="botao_parar">Parar</string>
     <string name="ativar_headset_bluetooth">Ativar Headset Bluetooth</string>
     <string name="frequencia">Frequência</string>
     <string name="delay">Delay</string>
@@ -17,19 +18,11 @@
         O aplicativo "Nome do app" é fruto de um projeto submetido ao programa "Protagonismo Estudantil" pelo aluno Jefferson de França Filho autor da ideia,
         o orientador do projeto é o professor Fabrício Martins Lopes, doutor em biomedicina, como voluntários temos os alunos João Gabriel Salgado e José Ede Campos Neto. Esse aplicativo vou desenvolvido ao longo
         de 10 meses onde foram determinadas relativas a cada mês de acordo com um cronograma previsto na proposta do projeto que foi aprovada pelo edita....EDITAR DEPOIS CORRETAMENTE...</string>
-    <string name="preferencias_usarheadsetbluetooth">Ativar headset bluetooth</string>
-    <string name="preferencias_desativarNotificacoes">Desativar notificações</string>
-    <string name="preferencias_criarModo">Criar modo</string>
-    <string name="preferencias_excluirModo">Excluir modo</string>
-    <string name="preferencias_alterarModo">Alterar modo</string>
-    <string name="preferencias_definirDelay">Delay</string>
-    <string name="preferencias_definirFrequencias">Frequência</string>
     <string name="opcao_menu_preferencias">Preferencias</string>
     <string name="opcao_menu_sobre">Sobre</string>
-    <string name="botao_parar">Parar</string>
     <string name="textView_app">Aplicativo de Auxílio ao Tratamento de Pessoas com Gagueira</string>
     <string-array name="itens_spiner">
-        <item>Modo Personalizado</item>
+        <item>Nenhum Modo Selecionado</item>
         <item>Modo Casa</item>
         <item>Modo Apresentação</item>
     </string-array>
