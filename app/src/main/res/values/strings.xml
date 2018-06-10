@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">DAF</string>
+    <string name="aviso">Aviso</string>
     <string name="iniciar">Iniciar</string>
     <string name="botao_parar">Parar</string>
     <string name="ativar_headset_bluetooth">Ativar Headset Bluetooth</string>
     <string name="frequencia">Frequência</string>
     <string name="delay">Delay</string>
+    <string name="ok">OK</string>
+    <string name="confirmacao">Confirmação</string>
+    <string name="nao">Não</string>
     <string name="desativar_notificacoes">Desativar Notificações</string>
-    <string name="botaosobre" />
-    <string name="botao_preferencias" />
     <string name="preferencias">Preferências</string>
     <string name="desenvolvedores">Desenvolvedores</string>
     <string name="jefferson">Jefferson de França Filho - Bacharelado em Engenharia de Software - Universidade Tecnológica Federal do Paraná - UTFPR - Gerente do projeto (aluno bolsista).</string>
@@ -21,6 +23,11 @@
     <string name="opcao_menu_preferencias">Preferencias</string>
     <string name="opcao_menu_sobre">Sobre</string>
     <string name="textView_app">Aplicativo de Auxílio ao Tratamento de Pessoas com Gagueira</string>
+    <string name="sim">Sim</string>
+    <string name="sim_">Sim</string>
+    <string name="deseja_realmente_apagar">Deseja realmente apagar?</string>
+    <string name="menu_apagar">Apagar</string>
+    <string name="menu_abrir">Abrir</string>
     <string-array name="itens_spiner">
         <item>Nenhum Modo Selecionado</item>
         <item>Modo Casa</item>

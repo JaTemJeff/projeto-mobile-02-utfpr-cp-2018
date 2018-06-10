@@ -4,9 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.support.annotation.NonNull;
@@ -22,12 +20,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.jeff.daf.database.ModoDAO;
+import com.example.jeff.daf.persistencia.DatabaseManager;
+import com.example.jeff.daf.modelo.Modo;
 
 import java.io.IOException;
 
@@ -36,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button botaoIniciar;
     private Button botaoParar;
-    private AlertDialog.Builder confirmaPararDialog;
+    private Button botaoNovoModo;
+    private AlertDialog.Builder confirmaSalvarModorDialog;
     private SeekBar seekbarFrequencia;
     private SeekBar seekbarDelay;
     private TextView exibeDelay;
@@ -44,14 +49,12 @@ public class MainActivity extends AppCompatActivity {
     private Switch switchativarbluetooth;
     private CheckBox checkboxnotificacao;
     private Spinner selecionaModo;
+    /*
+    private EditText nomeModo;
+    private EditText inputFrequencia;
+    private EditText inputDelay;*/
 
     private static final String ARQUIVO_PREFERENCIA = "ArqPreferencia";
-
-    private int delay;
-    private int frequencia;
-    private boolean ativar_motoBluetooth;
-    private boolean ativar_notificacao;
-
 
     //Gravacao de audio
     private static final String LOG_TAG = "AudioRecordTest";
@@ -144,6 +147,11 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
+        DatabaseManager.init(this);
+        ModoDAO dao = null;
+        dao = new ModoDAO(this);
+
+
         mFileName = getExternalCacheDir().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
 
@@ -156,31 +164,6 @@ public class MainActivity extends AppCompatActivity {
         switchativarbluetooth = findViewById(R.id.switch_headset_bluetooh_id);
         checkboxnotificacao = findViewById(R.id.checkbox_notificacao_id);
 
-        //Persistencia com sharedpreferences
-        SharedPreferences sharedPreferences = getSharedPreferences(ARQUIVO_PREFERENCIA, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("salvaFrequencia", seekbarFrequencia.getProgress());
-        editor.putInt("salvaDelay", seekbarDelay.getProgress());
-        editor.putBoolean("salvaNotificacao", checkboxnotificacao.isChecked());
-        editor.putBoolean("salvaBluetooth", switchativarbluetooth.isChecked());
-        editor.commit();
-
-        if(sharedPreferences.contains("salvaFrequencia")) {
-            seekbarFrequencia.setMax(0);
-            seekbarFrequencia.setMax(10);
-            seekbarFrequencia.setProgress(sharedPreferences.getInt("salvaFrequencia", seekbarFrequencia.getProgress()));
-        }
-        if(sharedPreferences.contains("salvaDelay")){
-            seekbarDelay.setMax(0);
-            seekbarDelay.setMax(4);
-            seekbarDelay.setProgress(sharedPreferences.getInt("salvaDelay", seekbarDelay.getProgress()));
-        }
-        if(sharedPreferences.contains("salvaNotificacao")) {
-            checkboxnotificacao.setChecked(sharedPreferences.getBoolean("salvaNotificacao", checkboxnotificacao.isChecked()));
-        }
-        if(sharedPreferences.contains("salvaBluetooth")) {
-            switchativarbluetooth.setChecked((sharedPreferences.getBoolean("salvaBluetooth", switchativarbluetooth.isChecked())));
-        }
 
         seekbarDelay.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -221,19 +204,29 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.itens_spiner, android.R.layout.simple_spinner_item);
         selecionaModo.setAdapter(adapter);
 
+        final Modo modocasa = new Modo();
+        if(modocasa.getNome_modo() == null){
+            modocasa.setNome_modo("Modo Casa");
+            modocasa.setFrequencia_modo(5);
+            modocasa.setDelay_modo(2);
+            modocasa.setBluetooth_modo(false);
+            modocasa.setNotificacao_modo(true);
+            dao.create(modocasa);
+        }
+
         selecionaModo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (selecionaModo.getSelectedItem().toString()) {
                     case "Modo Casa":
-                        seekbarFrequencia.setMax(0);
-                        seekbarFrequencia.setMax(4);
-                        seekbarFrequencia.setProgress(2);
                         seekbarDelay.setMax(0);
                         seekbarDelay.setMax(10);
-                        seekbarDelay.setProgress(2);
-                        switchativarbluetooth.setChecked(false);
-                        checkboxnotificacao.setChecked(false);
+                        seekbarDelay.setProgress(modocasa.getDelay_modo());
+                        seekbarFrequencia.setMax(0);
+                        seekbarFrequencia.setMax(4);
+                        seekbarFrequencia.setProgress(modocasa.getFrequencia_modo());
+                        switchativarbluetooth.setChecked(modocasa.isBluetooth_modo());
+                        checkboxnotificacao.setChecked(modocasa.isNotificacao_modo());
                         break;
 
 
@@ -269,6 +262,62 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        final EditText nomeModo = new EditText(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        nomeModo.setLayoutParams(lp);
+
+        botaoNovoModo = findViewById(R.id.button_novo_modo_id);
+        botaoNovoModo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)  {
+                confirmaSalvarModorDialog = new AlertDialog.Builder(MainActivity.this);
+                confirmaSalvarModorDialog.setTitle("Criar novo modo");
+                //confirmaSalvarModorDialog.setMessage("Digite o nome do modo");
+                //confirmaSalvarModorDialog.setCancelable(false);
+                //nomeModo.setText("Digite o nome do modo");
+                //inputDelay.setText(getText(seekbarDelay.getProgress()).toString());
+                //inputFrequencia.setText(getText(seekbarFrequencia.getProgress()).toString());
+                confirmaSalvarModorDialog.setMessage("Digite o nome do modo:");
+                confirmaSalvarModorDialog.setView(nomeModo);
+                //confirmaSalvarModorDialog.setView(inputDelay);
+                //confirmaSalvarModorDialog.setView(inputFrequencia);
+                confirmaSalvarModorDialog.setIcon(android.R.drawable.ic_input_add);
+
+                confirmaSalvarModorDialog.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final Modo novoModo = new Modo();
+                        ModoDAO dao = new ModoDAO(MainActivity.this);
+                        novoModo.setNome_modo(nomeModo.getText().toString());
+                        novoModo.setFrequencia_modo(seekbarFrequencia.getProgress());
+                        novoModo.setDelay_modo(seekbarDelay.getProgress());
+                        novoModo.setNotificacao_modo(checkboxnotificacao.isChecked());
+                        novoModo.setBluetooth_modo(switchativarbluetooth.isChecked());
+
+                        try{
+                            dao.create(novoModo);
+                        }
+                        catch (android.database.SQLException e){
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this, "Falha ao salvar modo.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        Toast.makeText(MainActivity.this, "Novo modo salvo com sucesso.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                confirmaSalvarModorDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(MainActivity.this, "Modo não foi salvo.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                confirmaSalvarModorDialog.create();
+                confirmaSalvarModorDialog.show();
+            }
+        });
+
 
         botaoIniciar = findViewById(R.id.botao_iniciar_id);
         botaoIniciar.setOnClickListener(new View.OnClickListener(){
@@ -293,6 +342,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+
 
     }
 
