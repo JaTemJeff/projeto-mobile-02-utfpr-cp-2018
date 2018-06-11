@@ -75,4 +75,8 @@ public class Modo {
     public void setNotificacao_modo(boolean notificacao_modo) {
         this.notificacao_modo = notificacao_modo;
     }
+    @Override
+    public String toString(){
+        return getNome_modo();
+    }
 }
