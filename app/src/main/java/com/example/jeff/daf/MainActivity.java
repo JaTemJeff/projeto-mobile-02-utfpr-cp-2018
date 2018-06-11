@@ -3,8 +3,10 @@ package com.example.jeff.daf;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.SQLException;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,7 +61,14 @@ public class MainActivity extends AppCompatActivity {
     private Switch switchativarbluetooth;
     private CheckBox checkboxnotificacao;
     private Spinner selecionaModo;
+    private Spinner selecionaCor;
     private String idModo;
+
+    private ConstraintLayout layout;
+    private static final String ARQUIVO = "preferencias_cor";
+    private static final String COR     = "COR";
+
+    private int opcao = Color.BLUE;
     /*
     private EditText nomeModo;
     private EditText inputFrequencia;
@@ -301,6 +311,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        layout = findViewById(R.id.layout_principal_id);
+        lerPreferenciaCor();
+        //muda cor de fundo
+        selecionaCor = findViewById(R.id.spinner_cor_id);
+        ArrayAdapter adapterCor = ArrayAdapter.createFromResource(this, R.array.itens_spiner_cor, android.R.layout.simple_spinner_item);
+        selecionaCor.setAdapter(adapterCor);
+        selecionaCor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (selecionaCor.getSelectedItemPosition()) {
+                    case 0:
+                        break;
+
+                    case 1:
+                        salvarPreferenciaCor(Color.WHITE);
+                        break;
+
+                    case 2:
+                        salvarPreferenciaCor(Color.YELLOW);
+                        break;
+
+                    case 3:
+                        salvarPreferenciaCor(Color.GRAY);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
         selecionaModo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             Modo modoSpiner = new Modo();
 
@@ -418,6 +462,38 @@ public class MainActivity extends AppCompatActivity {
             mPlayer.release();
             mPlayer = null;
         }
+    }
+
+   //Shared preferences
+    private void mudaCorFundo(){
+        layout.setBackgroundColor(opcao);
+    }
+
+    private void lerPreferenciaCor(){
+        SharedPreferences shared =
+                getSharedPreferences(ARQUIVO,
+                        Context.MODE_PRIVATE);
+
+        opcao = shared.getInt(COR, opcao);
+
+        mudaCorFundo();
+    }
+
+    private void salvarPreferenciaCor(int novoValor){
+
+        SharedPreferences shared =
+                getSharedPreferences(ARQUIVO,
+                        Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = shared.edit();
+
+        editor.putInt(COR, novoValor);
+
+        editor.commit();
+
+        opcao = novoValor;
+
+        mudaCorFundo();
     }
 }
 

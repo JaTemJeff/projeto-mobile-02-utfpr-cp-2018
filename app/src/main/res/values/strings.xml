@@ -35,10 +35,15 @@
     <string name="falha_modo">Falha ao salvar modo.</string>
     <string name="salvo_sucesso_modo">Novo modo salvo com sucesso.</string>
     <string name="salvo_falha_modo">Modo não foi salvo.</string>
-
     <string-array name="itens_spiner">
         <item>Nenhum Modo Selecionado</item>
         <item>Modo Casa</item>
         <item>Modo Apresentação</item>
+    </string-array>
+    <string-array name="itens_spiner_cor">
+        <item name="Muda">Mudar cor</item>
+        <item name="Branco">Branco</item>
+        <item name="Amarelo">Amarelo</item>
+        <item name="Cinza">Cinza</item>
     </string-array>
 </resources>

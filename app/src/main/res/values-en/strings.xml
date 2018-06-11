@@ -40,4 +40,10 @@
         <item>Home Mode</item>
         <item>Presentation Mode</item>
     </string-array>
+    <string-array name="itens_spiner_cor">
+        <item name="Muda">Change Color</item>
+        <item name="Branco">White</item>
+        <item name="Amarelo">Yellow</item>
+        <item name="Cinza">Gray</item>
+    </string-array>
 </resources>
