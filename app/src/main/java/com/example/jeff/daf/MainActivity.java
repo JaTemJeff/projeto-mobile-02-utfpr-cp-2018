@@ -1,10 +1,14 @@
 package com.example.jeff.daf;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.SQLException;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.support.annotation.NonNull;
@@ -16,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,14 +35,18 @@ import android.widget.Toast;
 
 
 import com.example.jeff.daf.database.ModoDAO;
+import com.example.jeff.daf.persistencia.DatabaseHelper;
 import com.example.jeff.daf.persistencia.DatabaseManager;
 import com.example.jeff.daf.modelo.Modo;
+import com.example.jeff.daf.utils.UtilsGUI;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private ArrayAdapter<Modo> listaAdapter;
     private Button botaoIniciar;
     private Button botaoParar;
     private Button botaoNovoModo;
@@ -49,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private Switch switchativarbluetooth;
     private CheckBox checkboxnotificacao;
     private Spinner selecionaModo;
+    private String idModo;
     /*
     private EditText nomeModo;
     private EditText inputFrequencia;
@@ -139,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
         DatabaseManager.init(this);
         ModoDAO dao = null;
         dao = new ModoDAO(this);
-
 
         mFileName = getExternalCacheDir().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
@@ -168,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         seekbarDelay.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                exibeDelay.setText("Delay: " + i + " Ms");
+                exibeDelay.setText(i + " Ms");
             }
 
             @Override
@@ -185,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         seekbarFrequencia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                exibeFrequencia.setText("Frequencia: " + i + " Mhz");
+                exibeFrequencia.setText(i + " Mhz");
             }
 
             @Override
@@ -199,68 +207,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         //Itens do spinner
         selecionaModo = findViewById(R.id.spinner_id);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.itens_spiner, android.R.layout.simple_spinner_item);
         selecionaModo.setAdapter(adapter);
 
+        /*
         final Modo modocasa = new Modo();
-        if(modocasa.getNome_modo() == null){
-            modocasa.setNome_modo("Modo Casa");
-            modocasa.setFrequencia_modo(5);
-            modocasa.setDelay_modo(2);
-            modocasa.setBluetooth_modo(false);
-            modocasa.setNotificacao_modo(true);
+        modocasa.setNome_modo("Modo Casa");
+        modocasa.setFrequencia_modo(5);
+        modocasa.setDelay_modo(2);
+        modocasa.setBluetooth_modo(false);
+        modocasa.setNotificacao_modo(true);
+        if(dao.findById(modocasa.getId_modo()).toString() == null){
             dao.create(modocasa);
-        }
+        }*/
 
-        selecionaModo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (selecionaModo.getSelectedItem().toString()) {
-                    case "Modo Casa":
-                        seekbarDelay.setMax(0);
-                        seekbarDelay.setMax(10);
-                        seekbarDelay.setProgress(modocasa.getDelay_modo());
-                        seekbarFrequencia.setMax(0);
-                        seekbarFrequencia.setMax(4);
-                        seekbarFrequencia.setProgress(modocasa.getFrequencia_modo());
-                        switchativarbluetooth.setChecked(modocasa.isBluetooth_modo());
-                        checkboxnotificacao.setChecked(modocasa.isNotificacao_modo());
-                        break;
-
-
-                    case "Modo Apresentação":
-                        seekbarDelay.setMax(0);
-                        seekbarDelay.setMax(10);
-                        seekbarDelay.setProgress(5);
-                        seekbarFrequencia.setMax(0);
-                        seekbarFrequencia.setMax(4);
-                        seekbarFrequencia.setProgress(2);
-                        switchativarbluetooth.setChecked(true);
-                        checkboxnotificacao.setChecked(true);
-                        break;
-
-                    case "Nenhum Modo Selecionado":
-                        seekbarDelay.setMax(0);
-                        seekbarDelay.setMax(10);
-                        seekbarDelay.setProgress(0);
-                        seekbarFrequencia.setMax(0);
-                        seekbarFrequencia.setMax(4);
-                        seekbarFrequencia.setProgress(0);
-                        switchativarbluetooth.setChecked(false);
-                        checkboxnotificacao.setChecked(false);
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
+        popularListaSpiner();
 
         final EditText nomeModo = new EditText(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -271,21 +235,27 @@ public class MainActivity extends AppCompatActivity {
         botaoNovoModo = findViewById(R.id.button_novo_modo_id);
         botaoNovoModo.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view)  {
+            public void onClick(final View view)  {
                 confirmaSalvarModorDialog = new AlertDialog.Builder(MainActivity.this);
-                confirmaSalvarModorDialog.setTitle("Criar novo modo");
-                //confirmaSalvarModorDialog.setMessage("Digite o nome do modo");
-                //confirmaSalvarModorDialog.setCancelable(false);
-                //nomeModo.setText("Digite o nome do modo");
-                //inputDelay.setText(getText(seekbarDelay.getProgress()).toString());
-                //inputFrequencia.setText(getText(seekbarFrequencia.getProgress()).toString());
-                confirmaSalvarModorDialog.setMessage("Digite o nome do modo:");
-                confirmaSalvarModorDialog.setView(nomeModo);
-                //confirmaSalvarModorDialog.setView(inputDelay);
-                //confirmaSalvarModorDialog.setView(inputFrequencia);
-                confirmaSalvarModorDialog.setIcon(android.R.drawable.ic_input_add);
+                confirmaSalvarModorDialog.setTitle(R.string.criar_modo);
 
-                confirmaSalvarModorDialog.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+                /*confirmaSalvarModorDialog.setMessage("Digite o nome do modo");
+                confirmaSalvarModorDialog.setCancelable(false);
+                nomeModo.setText("Digite o nome do modo");
+                inputDelay.setText(getText(seekbarDelay.getProgress()).toString());
+                inputFrequencia.setText(getText(seekbarFrequencia.getProgress()).toString());*/
+
+                confirmaSalvarModorDialog.setMessage(R.string.nome_do_modo);
+                nomeModo.setText("");
+                if(nomeModo.getParent()!=null)
+                    ((ViewGroup)nomeModo.getParent()).removeView(nomeModo); // <- fix
+                confirmaSalvarModorDialog.setView(nomeModo);
+
+                /*confirmaSalvarModorDialog.setView(inputDelay);
+                confirmaSalvarModorDialog.setView(inputFrequencia);*/
+
+                confirmaSalvarModorDialog.setIcon(android.R.drawable.ic_input_add);
+                confirmaSalvarModorDialog.setPositiveButton(R.string.salvar_modo, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         final Modo novoModo = new Modo();
@@ -295,22 +265,35 @@ public class MainActivity extends AppCompatActivity {
                         novoModo.setDelay_modo(seekbarDelay.getProgress());
                         novoModo.setNotificacao_modo(checkboxnotificacao.isChecked());
                         novoModo.setBluetooth_modo(switchativarbluetooth.isChecked());
-
-                        try{
-                            dao.create(novoModo);
+                        String nome  = UtilsGUI.validaCampoTexto(MainActivity.this, nomeModo, R.string.nome_vazio);
+                        if (nome == null){
+                            return;
                         }
-                        catch (android.database.SQLException e){
+                        try {
+                            DatabaseHelper conexao = DatabaseHelper.getInstance(MainActivity.this);
+                            conexao.getModoDao().create(novoModo);
+                            setResult(Activity.RESULT_OK);
+                            //finish();
+
+                        } catch (android.database.SQLException e){
                             e.printStackTrace();
-                            Toast.makeText(MainActivity.this, "Falha ao salvar modo.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, R.string.salvar_modo, Toast.LENGTH_SHORT).show();
+                            return;
+                        } catch (java.sql.SQLException e) {
+                            e.printStackTrace();
                         }
 
-                        Toast.makeText(MainActivity.this, "Novo modo salvo com sucesso.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.salvo_sucesso_modo, Toast.LENGTH_SHORT).show();
+                        popularListaSpiner();
+
                     }
                 });
-                confirmaSalvarModorDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                confirmaSalvarModorDialog.setNegativeButton(R.string.cancelar_modo, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(MainActivity.this, "Modo não foi salvo.", Toast.LENGTH_SHORT).show();
+                        setResult(Activity.RESULT_CANCELED);
+
                     }
                 });
                 confirmaSalvarModorDialog.create();
@@ -318,6 +301,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        selecionaModo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            Modo modoSpiner = new Modo();
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                modoSpiner = (Modo) adapterView.getItemAtPosition(i);
+                seekbarDelay.setMax(0);
+                seekbarDelay.setMax(10);
+                seekbarDelay.setProgress(modoSpiner.getDelay_modo());
+                seekbarFrequencia.setMax(0);
+                seekbarFrequencia.setMax(4);
+                seekbarFrequencia.setProgress(modoSpiner.getFrequencia_modo());
+                switchativarbluetooth.setChecked(modoSpiner.isBluetooth_modo());
+                checkboxnotificacao.setChecked(modoSpiner.isNotificacao_modo());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         botaoIniciar = findViewById(R.id.botao_iniciar_id);
         botaoIniciar.setOnClickListener(new View.OnClickListener(){
@@ -347,7 +351,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        popularListaSpiner();
+    }
 
+    private void popularListaSpiner(){
+
+        List<Modo> lista = null;
+
+        try {
+            DatabaseHelper conexao = DatabaseHelper.getInstance(this);
+
+            lista = conexao.getModoDao()
+                    .queryBuilder()
+                    .orderBy("nome_modo", true)
+                    .query();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+
+        listaAdapter = new ArrayAdapter<Modo>(this,
+                android.R.layout.simple_list_item_1,
+                lista);
+
+        selecionaModo.setAdapter(listaAdapter);
+    }
     //Infla Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

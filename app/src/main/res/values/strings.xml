@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DAF</string>
     <string name="aviso">Aviso</string>
@@ -5,22 +6,19 @@
     <string name="botao_parar">Parar</string>
     <string name="ativar_headset_bluetooth">Ativar Headset Bluetooth</string>
     <string name="frequencia">Frequência</string>
-    <string name="delay">Delay</string>
+    <string name="delay">Atraso</string>
     <string name="ok">OK</string>
     <string name="confirmacao">Confirmação</string>
     <string name="nao">Não</string>
     <string name="desativar_notificacoes">Desativar Notificações</string>
-    <string name="preferencias">Preferências</string>
-    <string name="desenvolvedores">Desenvolvedores</string>
-    <string name="jefferson">Jefferson de França Filho - Bacharelado em Engenharia de Software - Universidade Tecnológica Federal do Paraná - UTFPR - Gerente do projeto (aluno bolsista).</string>
-    <string name="fabricio">Fabrício Martins Lopes - Doutor em Bioinformática (2011) pela Universidade de São Paulo - Professor na Universidade Tecnológica Federal do Paraná - UTFPR - Orientador do projeto.</string>
-    <string name="joao">João Gabriel Salgado - Bacharelado em Engenharia de Software - Universidade Tecnológica Federal do Paraná - UTFPR. Desenvolvedor (aluno voluntário).</string>
-    <string name="joseede">Jose Ede Campos Neto - Bacharelado em Engenharia de Software - Universidade Tecnológica Federal do Paraná - UTFPR. Desenvolvedor (aluno voluntário).</string>
-    <string name="descricao_sobre">Projeto\n\n
-        O aplicativo "Nome do app" é fruto de um projeto submetido ao programa "Protagonismo Estudantil" pelo aluno Jefferson de França Filho autor da ideia,
-        o orientador do projeto é o professor Fabrício Martins Lopes, doutor em biomedicina, como voluntários temos os alunos João Gabriel Salgado e José Ede Campos Neto. Esse aplicativo vou desenvolvido ao longo
-        de 10 meses onde foram determinadas relativas a cada mês de acordo com um cronograma previsto na proposta do projeto que foi aprovada pelo edita....EDITAR DEPOIS CORRETAMENTE...</string>
-    <string name="opcao_menu_preferencias">Preferencias</string>
+    <string name="preferencias">Configurar Modos</string>
+    <string name="desenvolvedores">Desenvolvedor</string>
+    <string name="jefferson">Jefferson de França Filho - RA: 1429426 - Bacharelado em Engenharia de Software - Universidade Tecnológica Federal do Paraná - UTFPR .</string>
+    <string name="descricao_sobre">Projeto\n\nO aplicativo DAF foi desenvolvido como método de avaliação da disciplina de Programação para Dispositivos Móveis 2 da UTFPR-CP.
+    \n\nO aplicativo permite o cadastro de modos, para a simulação do efeito coro, que acontece quando uma pessoa que possui gagueira fala ou lê ao mesmo tempo que outra pessoa.
+    \n\nÉ permitido a configuração de Delay e Frequência, além da utilização de um headset bluetooth e desativação das notificações.
+    \n\n\n\n Jefferson de França Filho 10/06/2018</string>
+    <string name="opcao_menu_preferencias">Modos</string>
     <string name="opcao_menu_sobre">Sobre</string>
     <string name="textView_app">Aplicativo de Auxílio ao Tratamento de Pessoas com Gagueira</string>
     <string name="sim">Sim</string>
@@ -28,6 +26,16 @@
     <string name="deseja_realmente_apagar">Deseja realmente apagar?</string>
     <string name="menu_apagar">Apagar</string>
     <string name="menu_abrir">Abrir</string>
+    <string name="nome_vazio">Nome do modo está vazio!</string>
+    <string name="menu_item_alterar">Alterar</string>
+    <string name="nome_do_modo">Digite o nome do modo:</string>
+    <string name="criar_modo">Criar novo modo</string>
+    <string name="salvar_modo">Salvar</string>
+    <string name="cancelar_modo">Cancelar</string>
+    <string name="falha_modo">Falha ao salvar modo.</string>
+    <string name="salvo_sucesso_modo">Novo modo salvo com sucesso.</string>
+    <string name="salvo_falha_modo">Modo não foi salvo.</string>
+
     <string-array name="itens_spiner">
         <item>Nenhum Modo Selecionado</item>
         <item>Modo Casa</item>

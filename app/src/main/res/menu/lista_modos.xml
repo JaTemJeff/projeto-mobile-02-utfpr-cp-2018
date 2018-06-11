@@ -2,6 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_item_alterar_id"
+        android:title="@string/menu_item_alterar" />
+    <item
         android:id="@+id/menu_item_abrir_id"
         android:title="@string/menu_abrir" />
     <item

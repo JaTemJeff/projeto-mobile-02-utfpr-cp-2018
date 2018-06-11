@@ -23,6 +23,7 @@
             android:layout_marginTop="16dp"
             android:background="@android:drawable/alert_dark_frame"
             android:backgroundTint="@android:color/holo_green_dark"
+            android:elevation="24dp"
             android:lineSpacingExtra="14sp"
             android:text="@string/iniciar"
             android:textColor="@android:color/background_light"
@@ -30,7 +31,7 @@
             app:layout_constraintEnd_toStartOf="@+id/botao_parar_id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkbox_notificacao_id"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.697" />
 
         <Switch
             android:id="@+id/switch_headset-bluetooh_id"
@@ -83,42 +84,48 @@
 
         <TextView
             android:id="@+id/textview_frequencia_id"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="@string/frequencia"
             android:textColor="@android:color/background_dark"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textview_delay_id"
+            app:layout_constraintEnd_toStartOf="@+id/seekbar_frequencia_id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switch_headset-bluetooh_id" />
 
         <TextView
             android:id="@+id/textview_delay_id"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="52dp"
             android:layout_marginTop="32dp"
             android:text="@string/delay"
             android:textColor="@android:color/background_dark"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/spinner_id"
+            app:layout_constraintEnd_toStartOf="@+id/seekbar_delay_id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_frequencia_id" />
 
         <CheckBox
             android:id="@+id/checkbox_notificacao_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="33dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:buttonTint="@android:color/holo_green_dark"
             android:text="@string/desativar_notificacoes"
             app:layout_constraintBottom_toTopOf="@+id/botao_parar_id"
+            app:layout_constraintEnd_toStartOf="@+id/button_novo_modo_id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_id" />
 
@@ -150,6 +157,7 @@
             android:layout_marginTop="16dp"
             android:background="@android:drawable/alert_dark_frame"
             android:backgroundTint="@android:color/holo_red_dark"
+            android:elevation="24dp"
             android:text="@string/botao_parar"
             android:textColor="@android:color/background_light"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -162,10 +170,12 @@
             android:layout_width="0dp"
             android:layout_height="21dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:backgroundTint="@android:color/darker_gray"
             app:layout_constraintBottom_toTopOf="@+id/checkbox_notificacao_id"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekbar_delay_id" />
 
@@ -173,18 +183,17 @@
             android:id="@+id/button_novo_modo_id"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@android:drawable/ic_input_add"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:drawable/ic_menu_add"
             android:backgroundTint="@android:color/holo_green_dark"
-            app:layout_constraintBottom_toBottomOf="@+id/checkbox_notificacao_id"
+            android:elevation="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/botao_parar_id"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.485"
-            app:layout_constraintStart_toEndOf="@+id/spinner_id"
-            app:layout_constraintTop_toBottomOf="@+id/seekbar_delay_id"
-            app:layout_constraintVertical_bias="0.188" />
+            app:layout_constraintStart_toEndOf="@+id/checkbox_notificacao_id"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_id" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DAF</string>
+    <string name="aviso">Notice</string>
+    <string name="iniciar">Start</string>
+    <string name="botao_parar">Stop</string>
+    <string name="ativar_headset_bluetooth">Enable Bluetooth Headset</string>
+    <string name="frequencia">Frequency</string>
+    <string name="delay">Delay</string>
+    <string name="ok">OK</string>
+    <string name="confirmacao">Confirmation</string>
+    <string name="nao">No</string>
+    <string name="desativar_notificacoes">Disable Notifications</string>
+    <string name="preferencias">Configure Modes</string>
+    <string name="desenvolvedores">Developer</string>
+    <string name="jefferson">Jefferson de França Filho - RA: 1429426 - Bachelor of Science in Software Engineering - Federal Technological University of Paraná - UTFPR .</string>
+    <string name="descricao_sobre">Project\n\nThe DAF application was developed as a method of evaluation of the discipline of Programming for Mobile Devices 2 of the UTFPR-CP.
+    \n\nThe application allows the register of modes, for the simulation of the chorus effect, which happens when a person who has stuttering speaks or reads at the same time as another person.
+    \n\nDelays and Frequency settings are allowed, as well as the use of a bluetooth headset and the deactivation of notifications.
+    \n\n\n\n Jefferson de França Filho 10/06/2018</string>
+    <string name="opcao_menu_preferencias">Modes</string>
+    <string name="opcao_menu_sobre">About</string>
+    <string name="textView_app">Treatment Application for People with Stuttering</string>
+    <string name="sim">Yes</string>
+    <string name="sim_">Yes</string>
+    <string name="deseja_realmente_apagar">Do you really want to delete?</string>
+    <string name="menu_apagar">Delete</string>
+    <string name="menu_abrir">Open</string>
+    <string name="nome_vazio">Mode name is empty!</string>
+    <string name="menu_item_alterar">Update</string>
+    <string name="nome_do_modo">Enter the name of the mode:</string>
+    <string name="criar_modo">Create new mode</string>
+    <string name="salvar_modo">Save</string>
+    <string name="cancelar_modo">Cancel</string>
+    <string name="falha_modo">Failed to save mode.</string>
+    <string name="salvo_sucesso_modo">New mode saved successfully.</string>
+    <string name="salvo_falha_modo">Mode was not saved.</string>
+    <string-array name="itens_spiner">
+        <item>None Selected Mode</item>
+        <item>Home Mode</item>
+        <item>Presentation Mode</item>
+    </string-array>
+</resources>
